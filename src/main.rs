@@ -38,7 +38,7 @@ struct Args {
 	flag_out: String,
 }
 
-fn note_from_period(period: u16) -> String {
+fn note_from_period(period: u16, octave_add: i32) -> String {
 	// Find the position in PERIODS with the
 	// smallest difference
 	let mut found:i32 = -1;
@@ -56,7 +56,7 @@ fn note_from_period(period: u16) -> String {
 		println!("Failed to find note name");
 		String::new()
 	} else {
-		let octave = found / 12;
+		let octave = found / 12 + octave_add;
 		let name = ptmf::NOTE_NAMES[(found % 12) as usize];
         format!("{}{}",name.to_lowercase(),octave)
 	};
@@ -137,9 +137,15 @@ fn main() {
             let row = &pattern.rows[row_idx];
             // assume a row with only rests
             let mut new_note = String::from("R");
-            for channel in &row.channels {
+            for channel_idx in 0..row.channels.len() {
+                let octave_add = if channel_idx > 0 {
+                    1
+                } else {
+                    0
+                };
+                let channel = &row.channels[channel_idx];
 				if channel.period > 0 {
-					new_note = note_from_period(channel.period);
+					new_note = note_from_period(channel.period,octave_add);
 				}
             }
 
