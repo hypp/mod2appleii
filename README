@@ -1,0 +1,17 @@
+# mod2appleii
+Simple converter for Protracker modfiles to something that can be played on Apple ][+
+
+License
+Released under MIT License, please see the file LICENSE.
+
+Prerequisites
+Install Rust, Cargo and git
+https://www.rust-lang.org/en-US/
+https://crates.io/
+Cargo is usually shipped with Rust.
+
+Build:
+1. git clone https://github.com/hypp/mod2appleii.git
+2. cd mod2appleii
+3. cargo build --release
+
